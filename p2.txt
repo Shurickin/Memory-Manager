@@ -1,0 +1,59 @@
+.TH P2
+.SH Name
+P2 - Memory Management and Layering
+.SH Synopsis
+The goal of the project was to create a memory management system that contains no memory errors or leaks.
+.SH Description
+.SS
+/home/reptilian/P2/MemoryManager
+This file houses all code relevant to the MemoryManager class and library.
+.SS /home/reptilian/P2/MemoryManager/Block.h
+I created this file for the Block and Hole classes that are used in the MemoryManager class. Both objects are built relatively the same since a block has most of the same attributes as a hole. They are both built using the size that was given to allocate(). I keep track of their start, length, address, and size to make future comparisons simpler.
+.SS /home/reptilian/P2/MemoryManager/MemoryManager.h
+This header file was used to declare the class and its functions as defined in the pdf. I included vectors to hold the Block and Hole objects. A pointer to the start of the memory block and an int to hold the memory limit.
+.SS /home/reptilian/P2/MemoryManager/MemoryManager.cpp
+This source file was used to define the class functions.
+.PP
+Constructor - sets allocator function and wordSize upon creation.
+.PP
+Deconstructor - calls shutdown() and removes the contiguous memory array.
+.PP
+Initialize() - initializes block in memory. First clean the block, then check if we have enough space, if so, set memoryLimit, memoryStart, and add a Hole the size of the initialized block.
+.PP
+Shutdown() - loops through the vector of blocks and holes to deallocate all memory and empty vector.
+.PP
+Allocate() - allocates a block by sending allocator function the hole list. Then use the returned offset to find that hole in the vector and update it. Then create a new block.
+.PP
+Free() - loop through blocks to find the correct address, then remove that block and check if it gets replaced with a hole or if a hole is extended.
+.PP
+SetAllocator() - sets allocator function.
+.PP
+DumpMemoryMap() - creates a new file and iterates through the holes to write their information to the file.
+.PP
+GetBitMap() - first sorts the holes and uses vector to hold word representation. Then separate words into bytes, and store them in a new dynamically allocated vector. Insert size bytes at the start of the dynamic vector, then copy the data into a byte array, delete the vector, then return the byte array.
+.PP
+GetWordSize() - returns wordSize.
+.PP
+GetMemoryStart() - returns pointer to start of memory.
+.PP
+GetMemoryLimit() - returns memoryLimit.
+.PP
+GetList() - first check if blocks were allocated, if so, sort holes and create a 2-byte array that holds each hole's start and length.
+.PP
+BestFit() - loop though list of holes and return the offset of hole with lowest difference in size.
+.PP
+WorstFit() - loop though list of holes and return the offset of hole with highest difference in size.
+.SS /home/reptilian/P2/MemoryManager/makefile
+This makefile contains the commands necessary to build the MemoryManager library.
+.SH Testing
+I tested my code by running it with the test files provided in CommandLineTest.cpp and tested my libray with the commands provided in the pdf.
+.SH Bugs
+I was not able to debug my code through VSCode; I had to debug using an online compiler.
+.SH Link
+https://youtu.be/NGKvwqZ5fAM
+.SH References/Citations
+.PP
+ChatGPT - for debugging errors found with valgrind.
+.SH Author
+Jordan Levy
+
